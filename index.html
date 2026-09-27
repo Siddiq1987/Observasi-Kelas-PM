@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observasi Kelas PM</title>
+    <link rel="icon" href="https://pngup.com/K1Vd/ndik ya.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-container {
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+            }
+            input, select, textarea {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                resize: none !important;
+                color: black !important;
+            }
+            textarea {
+                overflow: visible !important;
+            }
+            /* Robust table borders and box-sizing to prevent right-border clipping */
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                table-layout: fixed !important;
+                box-sizing: border-box !important;
+                border: 1px solid black !important;
+            }
+            th, td {
+                border: 1px solid black !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+                box-sizing: border-box !important;
+            }
+            /* Hide dropdown arrow and border when printing, show clean black text */
+            select.print-clean {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background: transparent !important;
+                border: none !important;
+                text-align: center;
+                font-weight: bold;
+                color: black !important;
+                padding: 0 !important;
+            }
+            select.print-clean::-ms-expand {
+                display: none;
+            }
+            /* Clean section page breaks to prevent awkward table splits */
+            .print-page-break {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+        @page {
+            size: A4;
+            margin: 1.3cm;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-900 antialiased min-h-screen py-8 print:py-0">
+
+    <div class="max-w-[210mm] mx-auto mb-6 px-4 no-print flex flex-wrap items-center justify-between gap-4 bg-blue-500 p-4 rounded-xl shadow-sm border border-slate-200">
+        
+        <div class="flex items-center space-x-3">
+                <img src="https://pngup.com/K1Vd/ndik.png" alt="Icon" class="w-20 h-20 object-contain">
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">Instrumen Observasi Kelas</h1>
+                    <h3 class="text-base font-bold">Sistem Penilaian Pembelajaran Mendalam Berbasis Web<br>By Ash Siddiq ST</h3>
+                </div>
+        </div>
+
+
+        <div class="flex items-center flex-wrap gap-2">
+            <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
+            
+            <button onclick="exportData()" class="px-3 py-2 text-xs font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition flex items-center gap-1.5" title="Export data ke file JSON">
+                <i class="fa-solid fa-file-arrow-down"></i> Export
+            </button>
+            <button onclick="document.getElementById('importFile').click()" class="px-3 py-2 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition flex items-center gap-1.5" title="Import data dari file JSON">
+                <i class="fa-solid fa-file-arrow-up"></i> Import
+            </button>
+            <button onclick="resetForm()" class="px-3 py-2 text-xs font-medium text-slate-700 bg-red-100 hover:bg-red-200 rounded-lg transition flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-right"></i> Reset
+            </button>
+            <button onclick="window.print()" class="px-4 py-2 text-xs font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-sm transition flex items-center gap-1.5">
+                <i class="fa-solid fa-print"></i> Cetak / PDF
+            </button>
+        </div>
+    </div>
+
+    <div class="page-container max-w-[210mm] mx-auto bg-white shadow-xl rounded-none sm:rounded-2xl p-6 sm:p-10 border border-slate-200 print:shadow-none print:border-none">
+        
+        <!-- Header Title in One Line -->
+        <div class="text-center border-b-2 border-slate-900 pb-3 mb-6">
+            <h1 class="text-[12px] sm:text-xl md:text-xl font-extrabold text-slate-900 tracking-tight uppercase whitespace-nowrap">
+                INSTRUMEN OBSERVASI KELAS PEMBELAJARAN MENDALAM
+            </h1>
+        </div>
+
+        <!-- Vertical Identity Form -->
+        <div class="flex flex-col gap-2 mb-6 text-sm max-w-xl">
+            <div class="flex items-center gap-3">
+                <label class="font-bold w-32 text-black shrink-0">Nama Guru</label>
+                <span class="text-black font-bold">:</span>
+                <input type="text" id="namaGuru" value="Ash Siddiq ST" class="flex-1 bg-slate-50 border border-slate-300 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+            </div>
+            <div class="flex items-center gap-3">
+                <label class="font-bold w-32 text-black shrink-0">Mata Pelajaran</label>
+                <span class="text-black font-bold">:</span>
+                <input type="text" id="mapel" value="Informatika" class="flex-1 bg-slate-50 border border-slate-300 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+            </div>
+            <div class="flex items-center gap-3">
+                <label class="font-bold w-32 text-black shrink-0">Kelas</label>
+                <span class="text-black font-bold">:</span>
+                <input type="text" id="kelas" value="VII - A" class="flex-1 bg-slate-50 border border-slate-300 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+            </div>
+            <div class="flex items-center gap-3">
+                <label class="font-bold w-32 text-black shrink-0">Unit Kerja</label>
+                <span class="text-black font-bold">:</span>
+                <input type="text" id="unitKerja" value="SMP Islam Terpadu Tri Sukses" class="flex-1 bg-slate-50 border border-slate-300 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+            </div>
+        </div>
+
+        <!-- Scoring Scale Guide -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6 text-xs text-blue-900">
+            <p class="font-semibold mb-1">Berikan umpan balik terhadap perencanaan dengan skala yang digunakan :</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-1">
+                <div><strong>1</strong> : Kurang</div>
+                <div><strong>2</strong> : Cukup</div>
+                <div><strong>3</strong> : Baik</div>
+                <div><strong>4</strong> : Amat Baik</div>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto mb-6">
+            <table class="w-full border-collapse border border-slate-900 text-xs text-slate-900 table-fixed">
+                <thead>
+                    <tr class="bg-blue-100 text-slate-900 font-bold text-center">
+                        <th class="border border-slate-900 py-2 px-1 w-10">No</th>
+                        <th class="border border-slate-900 py-2 px-3 w-[40%]">Aspek yang diamati</th>
+                        <th class="border border-slate-900 py-2 px-1 w-15">Skor</th>
+                        <th class="border border-slate-900 py-2 px-3 w-[46%]">Komentar Kritis</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Dynamic Rows populated via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pt-2">
+            <div class="bg-blue-50/50 border border-slate-900 rounded-lg p-4 mb-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 pb-3 border-b border-slate-900">
+                    <div><b>
+                        <div class="text-sm font-bold">Nilai = (Jumlah Skor / Skor maksimum) x 100</div>
+                        <div class="text-xs mt-0.5">Jumlah Skor : <span id="totalSkorDisplay" class="font-bold">0</span> | Skor Maksimum = 31 Aspek × 4 = 124</div></b>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <span class="text-xs font-semibold block">Nilai Akhir</span>
+                            <span id="nilaiAkhirDisplay" class="text-lg font-black text-blue-700">0,00</span>
+                        </div>
+                        <div class="bg-white px-4 py-2 rounded-lg border border-slate-900 shadow-sm text-center">
+                            <span class="text-[10px] font-bold uppercase tracking-wider block">Kualifikasi</span>
+                            <span id="kualifikasiDisplay" class="text-sm font-bold text-red-600">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div>
+                        <span class="font-bold text-slate-900 block mb-1">Predikat:</span>
+                        <ul class="space-y-1 text-slate-800 bg-white p-2.5 rounded border border-slate-900 font-medium">
+                            <li><span class="font-bold">Nilai 91 - 100 : A Amat Baik </span></li>
+                            <li><span class="font-bold">Nilai 81 - 90 : B Baik </span></li>
+                            <li><span class="font-bold">Nilai 71 - 80 : C Cukup </span></li>
+                            <li><span class="font-bold">Nilai ≤ 70 : D Kurang </span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dedicated Tables for Catatan and Rekomendasi -->
+            <div class="space-y-2 mb-8 text-xs">
+                <table class="w-full border-collapse border border-slate-900">
+                    <thead>
+                        <tr class="bg-slate-200 text-slate-900 font-bold">
+                            <th class="border border-slate-900 py-2 px-3 text-left">Catatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-slate-900 p-2">
+                                <textarea id="catatanInput" class="w-full bg-transparent border-0 focus:ring-0 focus:outline-none text-slate-900 text-xs resize-y leading-relaxed" rows="3" placeholder="Tuliskan catatan observasi di sini..."></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="w-full border-collapse border border-slate-900">
+                    <thead>
+                        <tr class="bg-slate-200 text-slate-900 font-bold">
+                            <th class="border border-slate-900 py-2 px-3 text-left">Rekomendasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-slate-900 p-2">
+                                <textarea id="rekomendasiInput" class="w-full bg-transparent border-0 focus:ring-0 focus:outline-none text-slate-900 text-xs resize-y leading-relaxed" rows="3" placeholder="Tuliskan rekomendasi perbaikan di sini..."></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Signature Section (Right-aligned with space baris) -->
+            <div class="mt-8 pt-4 flex justify-end text-sm text-slate-900">
+                <div class="text-left space-y-1 font-bold">
+                    <div class="flex items-center gap-1 font-bold">
+                        <input type="text" id="lokasiInput" value="Kota Depok, 5 Oktober 2026" class="bg-transparent border-b border-dashed border-slate-900 focus:outline-none focus:border-blue-600 font-bold w-80 text-left">
+                    </div>
+                    <p class="font-bold text-slate-900">Observer</p>
+                    <div class="h-16"></div>
+                    <input type="text" id="namaObserverInput" value="Moch Ash Siddiq Sayyidul Tarmizi, S.T" class="font-bold text-slate-900 bg-transparent border-b border-dashed border-slate-900 focus:outline-none focus:border-blue-600 w-96 text-left">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const observationData = [
+            // A. Kegiatan Pendahuluan
+            { type: 'header', title: 'A. Kegiatan Pendahuluan' },
+            { id: 1, text: 'Menyiapkan fisik dan psikis murid (memeriksa kehadiran, kelengkapan belajar, ice breaking, dsb)', defaultScore: 3 },
+            { id: 2, text: 'Memotivasi belajar secara kontekstual dengan menampilkan isu atau permasalahan (agar murid memahami manfaat belajar)', defaultScore: 3 },
+            { id: 3, text: 'Mengajukan pertanyaan reflektif dan essensial', defaultScore: 3 },
+            { id: 4, text: 'Menyampaikan tujuan pembelajaran sesuai kebutuhan murid', defaultScore: 3 },
+            { id: 5, text: 'Menyampaikan rencana kegiatan pembelajaran (kerja kelompok atau kerja individual, dsb)', defaultScore: 3 },
+
+            // B. Kegiatan Inti
+            { type: 'header', title: 'B. Kegiatan Inti' },
+            { id: 6, text: 'Menstimulasi murid untuk bertanya (membangkitkan keingintahuan)', defaultScore: 3 },
+            { id: 7, text: 'Mengajukan pertanyaan-pertanyaan eksploratif tentang materi pembelajaran melalui berbagai sumber (membaca/praktik/simulasi/demonstrasi dsb)', defaultScore: 3 },
+            { id: 8, text: 'Menciptakan lingkungan belajar yang melibatkan murid secara aktif (menggali informasi dari berbagai sumber) di dalam maupun di luar kelas.', defaultScore: 3 },
+            { 
+                type: 'subheader', 
+                title: 'Langkah pembelajaran dapat memfasilitasi murid untuk merasakan pengalaman belajar <strong class="text-blue-700">MEMAHAMI</strong> (terlibat aktif mengkonstruksi pengetahuan agar dapat memahami secara mendalam konsep atau materi dari berbagai sumber dan konteks).' 
+            },
+            { id: 9, sub: 'a.', text: 'Menghubungkan pengetahuan baru dengan pengetahuan sebelumnya' },
+            { id: 10, sub: 'b.', text: 'Memotivasi proses berpikir murid' },
+            { id: 11, sub: 'c.', text: 'Menghubungkan dengan konteks nyata dan/atau kehidupan sehari-hari' },
+            { id: 12, sub: 'd.', text: 'Memberikan kebebasan eksploratif dan kolaboratif' },
+            { id: 13, sub: 'e.', text: 'Menanamkan nilai-nilai moral dan etika dan nilai positif lainnya' },
+            { id: 14, sub: 'f.', text: 'Mengaitkan pembelajaran dengan pembentukan karakter murid' },
+            { 
+                type: 'subheader', 
+                title: 'Langkah pembelajaran dapat memfasilitasi murid untuk merasakan pengalaman belajar <strong class="text-blue-700">MENGAPLIKASI</strong> (mengaplikasi pemahaman secara kontekstual dalam kehidupan nyata sebagai bagian dari pendalaman pengetahuan)',
+            },
+            { id: 15, sub: 'a.', text: 'Menghubungkan konsep baru dengan pengetahuan sebelumnya.' },
+            { id: 16, sub: 'b.', text: 'Menerapkan pengetahuan ke dalam situasi nyata atau bidang lain.' },
+            { id: 17, sub: 'c.', text: 'Memperkuatkan pemahaman dengan eksplorasi lebih lanjut.' },
+            { id: 18, sub: 'd.', text: 'Berpikir kritis dan mencari solusi inovatif berdasarkan pengetahuan yang ada.' },
+            { 
+                type: 'subheader', 
+                title: 'Langkah pembelajaran dapat memfasilitasi murid untuk merasakan pengalaman belajar <strong class="text-blue-700">MEREFLEKSI</strong> (mengevaluasi dan memaknai proses serta hasil dari tindakan atau praktik nyata yang telah mereka lakukan dan menentukan tindak lanjut ke depan, serta mengelola proses belajarnya secara mandiri).',
+                pageBreak: true
+            },
+            { id: 19, sub: 'a.', text: 'Memotivasi diri sendiri untuk tuntas belajar bagaimana cara belajar' },
+            { id: 20, sub: 'b.', text: 'Refleksi terhadap pencapaian tujuan pembelajaran (evaluasi diri)' },
+            { id: 21, sub: 'c.', text: 'Menerapkan strategi berpikir' },
+            { id: 22, sub: 'd.', text: 'Memiliki kemampuan metakognisi (meregulasi diri dalam pembelajaran)' },
+            { id: 23, sub: 'e.', text: 'Meregulasi emosi dalam pembelajaran' },
+            { id: 24, text: 'Mengaitkan materi pembelajaran dalam suatu mata pelajaran dengan mata pelajaran lainnya (lintas disiplin ilmu)', defaultScore: 3 },
+            { id: 25, text: 'Merespons kebutuhan murid (menghargai proses, hasil, dan keunggulan setiap murid serta memotivasi setiap murid saat pembelajaran dengan tindakan atau kata-kata motivasi yang membangkitkan semangat belajar murid)', defaultScore: 3 },
+            { id: 26, text: 'Melibatkan teknologi digital dalam proses pembelajaran (media dan sumber belajar)', defaultScore: 3 },
+
+            // C. Penutup
+            { type: 'header', title: 'C. Penutup',},
+            { id: 27, text: 'Memfasilitasi dan membimbing murid membuat kesimpulan untuk mendapatkan pemahaman bersama.', defaultScore: 3 },
+            { id: 28, text: 'Memfasilitasi dan membimbing murid untuk merefleksi proses dan hasil pembelajaran (keberhasilan, kesulitan, apa yang telah dipelajari dan manfaatnya, apa yang telah dikuasai, serta apa yang ingin dipelajari berikutnya, dsb.)', defaultScore: 3, pageBreak: true },
+            { id: 29, text: 'Memberikan umpan balik untuk semua murid berdasarkan temuan selama pembelajaran berlangsung terhadap proses dan hasil pembelajaran yang telah dilalui.', defaultScore: 3 },
+            { id: 30, text: 'Melakukan asesmen formatif akhir (memperoleh informasi awal sebagai dasar pembelajaran pertemuan berikutnya) atau sumatif (mengetahui ketercapaian tujuan pembelajaran).', defaultScore: 3 },
+            { id: 31, text: 'Memberikan tugas lanjutan yang relevan untuk memperdalam materi.', defaultScore: 3 }
+        ];
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            observationData.forEach((item) => {
+                const tr = document.createElement('tr');
+                
+                if (item.type === 'header') {
+                    if (item.pageBreak) {
+                        tr.className = 'bg-amber-100 font-bold text-slate-900 print-page-break';
+                    } else {
+                        tr.className = 'bg-amber-100 font-bold text-slate-900';
+                    }
+                    tr.innerHTML = `<td colspan="4" class="border border-slate-900 py-1.5 px-3">${item.title}</td>`;
+                } else if (item.type === 'subheader') {
+                    if (item.pageBreak) {
+                        tr.className = 'bg-slate-50 italic print-page-break';
+                    } else {
+                        tr.className = 'bg-slate-50 italic';
+                    }
+                    tr.innerHTML = `<td colspan="4" class="border border-slate-900 py-1.5 px-3">${item.title}</td>`;
+                } else {
+                    tr.className = 'hover:bg-slate-50/80 transition';
+                    const score = item.defaultScore !== undefined ? item.defaultScore : 3;
+                    const subText = item.sub ? `<span class="font-bold mr-1.5 text-slate-600">${item.sub}</span>` : '';
+                    
+                    let dropdownHtml = `
+                        <select id="score_${item.id}" onchange="calculateScores()" class="print-clean w-full text-center font-bold text-blue-700 bg-white border border-slate-300 rounded py-1 px-1 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="1" ${score === 1 ? 'selected' : ''}>1</option>
+                            <option value="2" ${score === 2 ? 'selected' : ''}>2</option>
+                            <option value="3" ${score === 3 ? 'selected' : ''}>3</option>
+                            <option value="4" ${score === 4 ? 'selected' : ''}>4</option>
+                        </select>
+                    `;
+
+                    tr.innerHTML = `
+                        <td class="border border-slate-900 text-center py-2 px-1 font-medium">${item.id}</td>
+                        <td class="border border-slate-900 py-2 px-3">${subText}${item.text}</td>
+                        <td class="border border-slate-900 p-1.5 text-center">${dropdownHtml}</td>
+                        <td class="border border-slate-900 p-1.5 align-top">
+                            <textarea id="comment_${item.id}" class="w-full text-xs bg-transparent border-0 focus:ring-1 focus:ring-blue-500 rounded p-1 text-slate-900 resize-y leading-relaxed" rows="3" placeholder="Tulis komentar kritis..."></textarea>
+                        </td>
+                    `;
+                }
+                tbody.appendChild(tr);
+            });
+            calculateScores();
+        }
+
+        function calculateScores() {
+            let totalSkor = 0;
+            const scoringItems = observationData.filter(i => i.id !== undefined);
+
+            scoringItems.forEach(item => {
+                const selectElem = document.getElementById(`score_${item.id}`);
+                let itemScore = 0;
+                if (selectElem) {
+                    itemScore = parseInt(selectElem.value) || 0;
+                }
+                totalSkor += itemScore;
+            });
+
+            const maxScore = 124;
+            const nilaiAkhir = (totalSkor / maxScore) * 100;
+
+            document.getElementById('totalSkorDisplay').textContent = totalSkor;
+            document.getElementById('nilaiAkhirDisplay').textContent = nilaiAkhir.toFixed(2).replace('.', ',');
+
+            let kualifikasi = '';
+            let kualifikasiColor = '';
+
+            if (nilaiAkhir >= 91) {
+                kualifikasi = 'A - Amat Baik';
+                kualifikasiColor = 'text-emerald-600 bg-emerald-50';
+            } else if (nilaiAkhir >= 81) {
+                kualifikasi = 'B - Baik';
+                kualifikasiColor = 'text-blue-600 bg-blue-50';
+            } else if (nilaiAkhir >= 71) {
+                kualifikasi = 'C - Cukup';
+                kualifikasiColor = 'text-amber-600 bg-amber-50';
+            } else {
+                kualifikasi = 'D - Kurang';
+                kualifikasiColor = 'text-red-600 bg-red-50';
+            }
+
+            const qualDisplay = document.getElementById('kualifikasiDisplay');
+            qualDisplay.textContent = kualifikasi;
+            qualDisplay.className = `text-sm font-extrabold px-2 py-0.5 rounded ${kualifikasiColor}`;
+        }
+
+        function resetForm() {
+            if (window.confirm && window.confirm("Apakah Anda yakin ingin mereset semua penilaian?")) {
+                renderTable();
+                document.getElementById('catatanInput').value = '';
+                document.getElementById('rekomendasiInput').value = '';
+                document.getElementById('lokasiInput').value = 'Kota Depok, 5 Oktober 2026';
+                document.getElementById('tanggalInput').value = '5 Oktober 2026';
+                document.getElementById('namaObserverInput').value = 'Moch Ash Siddiq Sayyidul Tarmizi, S.T';
+            }
+        }
+
+        function exportData() {
+            const formData = {
+                namaGuru: document.getElementById('namaGuru').value,
+                mapel: document.getElementById('mapel').value,
+                kelas: document.getElementById('kelas').value,
+                unitKerja: document.getElementById('unitKerja').value,
+                catatan: document.getElementById('catatanInput').value,
+                rekomendasi: document.getElementById('rekomendasiInput').value,
+                lokasi: document.getElementById('lokasiInput').value,
+                tanggal: document.getElementById('tanggalInput').value,
+                namaObserver: document.getElementById('namaObserverInput').value,
+                scores: {},
+                comments: {}
+            };
+
+            observationData.filter(i => i.id !== undefined).forEach(item => {
+                const sEl = document.getElementById(`score_${item.id}`);
+                const cEl = document.getElementById(`comment_${item.id}`);
+                if (sEl) formData.scores[item.id] = sEl.value;
+                if (cEl) formData.comments[item.id] = cEl.value;
+            });
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(formData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `observasi_${formData.namaGuru.replace(/\s+/g, '_')}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importData(event) {
+            const fileReader = new FileReader();
+            if (event.target.files[0]) {
+                fileReader.readAsText(event.target.files[0], "UTF-8");
+                fileReader.onload = function(e) {
+                    try {
+                        const parsed = JSON.parse(e.target.result);
+                        if (parsed.namaGuru !== undefined) document.getElementById('namaGuru').value = parsed.namaGuru;
+                        if (parsed.mapel !== undefined) document.getElementById('mapel').value = parsed.mapel;
+                        if (parsed.kelas !== undefined) document.getElementById('kelas').value = parsed.kelas;
+                        if (parsed.unitKerja !== undefined) document.getElementById('unitKerja').value = parsed.unitKerja;
+                        if (parsed.catatan !== undefined) document.getElementById('catatanInput').value = parsed.catatan;
+                        if (parsed.rekomendasi !== undefined) document.getElementById('rekomendasiInput').value = parsed.rekomendasi;
+                        if (parsed.lokasi !== undefined) document.getElementById('lokasiInput').value = parsed.lokasi;
+                        if (parsed.tanggal !== undefined) document.getElementById('tanggalInput').value = parsed.tanggal;
+                        if (parsed.namaObserver !== undefined) document.getElementById('namaObserverInput').value = parsed.namaObserver;
+
+                        if (parsed.scores) {
+                            for (const [id, val] of Object.entries(parsed.scores)) {
+                                const sEl = document.getElementById(`score_${id}`);
+                                if (sEl) sEl.value = val;
+                            }
+                        }
+
+                        if (parsed.comments) {
+                            for (const [id, val] of Object.entries(parsed.comments)) {
+                                const cEl = document.getElementById(`comment_${id}`);
+                                if (cEl) cEl.value = val;
+                            }
+                        }
+
+                        calculateScores();
+                        alert("Data berhasil diimpor!");
+                    } catch (err) {
+                        alert("Gagal membaca file JSON. Pastikan format file benar.");
+                    }
+                };
+            }
+        }
+
+        window.onload = function() {
+            renderTable();
+        };
+    </script>
+</body>
+</html>
