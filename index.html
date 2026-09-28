@@ -92,13 +92,13 @@
 </head>
 <body class="bg-slate-100 font-sans text-slate-900 antialiased min-h-screen py-8 print:py-0">
 
-    <div class="max-w-[210mm] mx-auto mb-6 px-4 no-print flex flex-wrap items-center justify-between gap-4 bg-blue-500 p-4 rounded-xl shadow-sm border border-slate-200">
+    <div class="max-w-[210mm] mx-auto mb-6 px-4 no-print flex flex-wrap items-center justify-between gap-4 bg-blue-900 p-4 rounded-xl shadow-sm border bg-blue-800">
         
         <div class="flex items-center space-x-3">
                 <img src="https://pngup.com/K1Vd/ndik.png" alt="Icon" class="w-20 h-20 object-contain">
                 <div>
-                    <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">Instrumen Observasi Kelas</h1>
-                    <h3 class="text-base font-bold">Sistem Penilaian Pembelajaran Mendalam Berbasis Web<br>By Ash Siddiq ST</h3>
+                    <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">Observasi Kelas Pembelajaran Mendalam</h1>
+                    <h3 class="text-base font-bold">By Ash Siddiq ST</h3>
                 </div>
         </div>
 
@@ -106,16 +106,16 @@
         <div class="flex items-center flex-wrap gap-2">
             <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
             
-            <button onclick="exportData()" class="px-3 py-2 text-xs font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition flex items-center gap-1.5" title="Export data ke file JSON">
+            <button onclick="exportData()" class="px-3 py-2 text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-700 border border-emerald-200 rounded-lg transition flex items-center gap-1.5" title="Export data ke file JSON">
                 <i class="fa-solid fa-file-arrow-down"></i> Export
             </button>
-            <button onclick="document.getElementById('importFile').click()" class="px-3 py-2 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition flex items-center gap-1.5" title="Import data dari file JSON">
+            <button onclick="document.getElementById('importFile').click()" class="px-3 py-2 text-xs font-medium text-white bg-violet-600 hover:bg-violet-700 border border-amber-200 rounded-lg transition flex items-center gap-1.5" title="Import data dari file JSON">
                 <i class="fa-solid fa-file-arrow-up"></i> Import
             </button>
-            <button onclick="resetForm()" class="px-3 py-2 text-xs font-medium text-slate-700 bg-red-100 hover:bg-red-200 rounded-lg transition flex items-center gap-1.5">
+            <button onclick="resetForm()" class="px-3 py-2 text-xs font-medium text-white bg-amber-600 hover:bg-amber-700 rounded-lg transition flex items-center gap-1.5">
                 <i class="fa-solid fa-rotate-right"></i> Reset
             </button>
-            <button onclick="window.print()" class="px-4 py-2 text-xs font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-sm transition flex items-center gap-1.5">
+            <button onclick="window.print()" class="px-4 py-2 text-xs font-medium text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-sm transition flex items-center gap-1.5">
                 <i class="fa-solid fa-print"></i> Cetak / PDF
             </button>
         </div>
