@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Observasi Kelas PM</title>
+    <title>Observasi Kelas Pembelajaran Mendalam</title>
     <link rel="icon" href="https://pngup.com/K1Vd/ndik ya.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -49,7 +49,6 @@
             textarea {
                 overflow: visible !important;
             }
-            /* Robust table borders and box-sizing to prevent right-border clipping */
             table {
                 width: 100% !important;
                 border-collapse: collapse !important;
@@ -63,7 +62,6 @@
                 overflow-wrap: break-word !important;
                 box-sizing: border-box !important;
             }
-            /* Hide dropdown arrow and border when printing, show clean black text */
             select.print-clean {
                 appearance: none;
                 -webkit-appearance: none;
@@ -78,7 +76,6 @@
             select.print-clean::-ms-expand {
                 display: none;
             }
-            /* Clean section page breaks to prevent awkward table splits */
             .print-page-break {
                 break-before: page;
                 page-break-before: always;
@@ -92,24 +89,27 @@
 </head>
 <body class="bg-slate-100 font-sans text-slate-900 antialiased min-h-screen py-8 print:py-0">
 
-    <div class="max-w-[210mm] mx-auto mb-6 px-4 no-print flex flex-wrap items-center justify-between gap-4 bg-blue-900 p-4 rounded-xl shadow-sm border bg-blue-800">
+    <!-- Header Navigation / Actions Bar -->
+    <div class="max-w-[210mm] mx-auto mb-6 px-4 no-print flex flex-wrap items-center justify-between gap-4 bg-blue-900 p-4 rounded-xl shadow-md border border-blue-800">
         
         <div class="flex items-center space-x-3">
-                <img src="https://pngup.com/K1Vd/ndik.png" alt="Icon" class="w-20 h-20 object-contain">
-                <div>
-                    <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2 text-white">Observasi Kelas Pembelajaran Mendalam</h1>
-                    <h3 class="text-base font-bold text-white">By Ash Siddiq ST</h3>
-                </div>
+            <img src="https://pngup.com/K1Vd/ndik.png" alt="Icon" class="w-16 h-16 sm:w-20 sm:h-20 object-contain">
+            <div>
+                <h1 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">Observasi Kelas Pembelajaran Mendalam</h1>
+                <h3 class="text-sm sm:text-base font-medium text-blue-200">By Ash Siddiq ST</h3>
+            </div>
         </div>
-
 
         <div class="flex items-center flex-wrap gap-2">
             <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
             
-            <button onclick="exportData()" class="px-3 py-2 text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-700 border border-emerald-200 rounded-lg transition flex items-center gap-1.5" title="Export data ke file JSON">
+            <button id="btnGenerateAI" onclick="generateWithAI()" class="px-3.5 py-2 text-xs font-semibold text-white bg-teal-600 hover:bg-teal-700 border border-teal-500 rounded-lg shadow-sm transition flex items-center gap-1.5" title="Generate Komentar & Catatan secara otomatis menggunakan Gemini AI">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate AI
+            </button>
+            <button onclick="exportData()" class="px-3 py-2 text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-700 border border-emerald-500 rounded-lg transition flex items-center gap-1.5" title="Export data ke file JSON">
                 <i class="fa-solid fa-file-arrow-down"></i> Export
             </button>
-            <button onclick="document.getElementById('importFile').click()" class="px-3 py-2 text-xs font-medium text-white bg-violet-600 hover:bg-violet-700 border border-amber-200 rounded-lg transition flex items-center gap-1.5" title="Import data dari file JSON">
+            <button onclick="document.getElementById('importFile').click()" class="px-3 py-2 text-xs font-medium text-white bg-violet-600 hover:bg-violet-700 border border-violet-500 rounded-lg transition flex items-center gap-1.5" title="Import data dari file JSON">
                 <i class="fa-solid fa-file-arrow-up"></i> Import
             </button>
             <button onclick="resetForm()" class="px-3 py-2 text-xs font-medium text-white bg-amber-600 hover:bg-amber-700 rounded-lg transition flex items-center gap-1.5">
@@ -121,9 +121,10 @@
         </div>
     </div>
 
+    <!-- Main Container -->
     <div class="page-container max-w-[210mm] mx-auto bg-white shadow-xl rounded-none sm:rounded-2xl p-6 sm:p-10 border border-slate-200 print:shadow-none print:border-none">
         
-        <!-- Header Title in One Line -->
+        <!-- Header Title -->
         <div class="text-center border-b-2 border-slate-900 pb-3 mb-6">
             <h1 class="text-[12px] sm:text-xl md:text-xl font-extrabold text-slate-900 tracking-tight uppercase whitespace-nowrap">
                 INSTRUMEN OBSERVASI KELAS PEMBELAJARAN MENDALAM
@@ -131,7 +132,7 @@
         </div>
 
         <!-- Vertical Identity Form -->
-        <div class="flex flex-col gap-2 mb-6 text-sm max-w-xl">
+        <div class="flex flex-col gap-2.5 mb-6 text-sm max-w-xl">
             <div class="flex items-center gap-3">
                 <label class="font-bold w-32 text-black shrink-0">Nama Guru</label>
                 <span class="text-black font-bold">:</span>
@@ -146,6 +147,11 @@
                 <label class="font-bold w-32 text-black shrink-0">Kelas</label>
                 <span class="text-black font-bold">:</span>
                 <input type="text" id="kelas" value="VII - A" class="flex-1 bg-slate-50 border border-slate-300 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+            </div>
+            <div class="flex items-center gap-3">
+                <label class="font-bold w-32 text-black shrink-0">Materi</label>
+                <span class="text-black font-bold">:</span>
+                <input type="text" id="materi" value="Berpikir Komputasional & Logika Algoritma" placeholder="Isi materi pelajaran..." class="flex-1 bg-slate-50 border border-slate-300 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
             </div>
             <div class="flex items-center gap-3">
                 <label class="font-bold w-32 text-black shrink-0">Unit Kerja</label>
@@ -165,6 +171,7 @@
             </div>
         </div>
 
+        <!-- Observation Aspects Table -->
         <div class="overflow-x-auto mb-6">
             <table class="w-full border-collapse border border-slate-900 text-xs text-slate-900 table-fixed">
                 <thead>
@@ -181,12 +188,13 @@
             </table>
         </div>
 
+        <!-- Score Summary & Grade Section -->
         <div class="pt-2">
             <div class="bg-blue-50/50 border border-slate-900 rounded-lg p-4 mb-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 pb-3 border-b border-slate-900">
-                    <div><b>
+                    <div>
                         <div class="text-sm font-bold">Nilai = (Jumlah Skor / Skor maksimum) x 100</div>
-                        <div class="text-xs mt-0.5">Jumlah Skor : <span id="totalSkorDisplay" class="font-bold">0</span> | Skor Maksimum = 31 Aspek × 4 = 124</div></b>
+                        <div class="text-xs mt-0.5">Jumlah Skor : <span id="totalSkorDisplay" class="font-bold">0</span> | Skor Maksimum = 31 Aspek × 4 = 124</div>
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="text-right">
@@ -213,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- Dedicated Tables for Catatan and Rekomendasi -->
+            <!-- Tables for Catatan and Rekomendasi -->
             <div class="space-y-2 mb-8 text-xs">
                 <table class="w-full border-collapse border border-slate-900">
                     <thead>
@@ -246,7 +254,7 @@
                 </table>
             </div>
 
-            <!-- Signature Section (Right-aligned with space baris) -->
+            <!-- Signature Section -->
             <div class="mt-8 pt-4 flex justify-end text-sm text-slate-900">
                 <div class="text-left space-y-1 font-bold">
                     <div class="flex items-center gap-1 font-bold">
@@ -261,7 +269,38 @@
 
     </div>
 
+    <!-- Loading Modal for AI Generation -->
+    <div id="aiLoadingModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 text-center space-y-4">
+            <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mx-auto text-2xl animate-bounce">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-base text-slate-900">Sedang Menggenerasi AI...</h3>
+                <p id="aiProgressText" class="text-xs text-slate-500 mt-1">Gemini AI sedang menganalisis materi dan skor untuk menyusun komentar kritis yang objektif.</p>
+            </div>
+            <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-teal-600 h-full w-2/3 animate-pulse"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="customModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 text-center space-y-4">
+            <div id="modalIconContainer" class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i id="modalIcon" class="fa-solid fa-circle-check"></i>
+            </div>
+            <div>
+                <h3 id="modalTitle" class="font-bold text-base text-slate-900">Berhasil</h3>
+                <p id="modalMessage" class="text-xs text-slate-600 mt-1">Komentar kritis dan rekomendasi telah berhasil diperbarui.</p>
+            </div>
+            <button onclick="closeModal()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-xs transition">OK</button>
+        </div>
+    </div>
+
     <script>
+        // Observation Data Schema
         const observationData = [
             // A. Kegiatan Pendahuluan
             { type: 'header', title: 'A. Kegiatan Pendahuluan' },
@@ -280,36 +319,36 @@
                 type: 'subheader', 
                 title: 'Langkah pembelajaran dapat memfasilitasi murid untuk merasakan pengalaman belajar <strong class="text-blue-700">MEMAHAMI</strong> (terlibat aktif mengkonstruksi pengetahuan agar dapat memahami secara mendalam konsep atau materi dari berbagai sumber dan konteks).' 
             },
-            { id: 9, sub: 'a.', text: 'Menghubungkan pengetahuan baru dengan pengetahuan sebelumnya' },
-            { id: 10, sub: 'b.', text: 'Memotivasi proses berpikir murid' },
-            { id: 11, sub: 'c.', text: 'Menghubungkan dengan konteks nyata dan/atau kehidupan sehari-hari' },
-            { id: 12, sub: 'd.', text: 'Memberikan kebebasan eksploratif dan kolaboratif' },
-            { id: 13, sub: 'e.', text: 'Menanamkan nilai-nilai moral dan etika dan nilai positif lainnya' },
-            { id: 14, sub: 'f.', text: 'Mengaitkan pembelajaran dengan pembentukan karakter murid' },
+            { id: 9, sub: 'a.', text: 'Menghubungkan pengetahuan baru dengan pengetahuan sebelumnya', defaultScore: 3 },
+            { id: 10, sub: 'b.', text: 'Memotivasi proses berpikir murid', defaultScore: 3 },
+            { id: 11, sub: 'c.', text: 'Menghubungkan dengan konteks nyata dan/atau kehidupan sehari-hari', defaultScore: 3 },
+            { id: 12, sub: 'd.', text: 'Memberikan kebebasan eksploratif dan kolaboratif', defaultScore: 3 },
+            { id: 13, sub: 'e.', text: 'Menanamkan nilai-nilai moral dan etika dan nilai positif lainnya', defaultScore: 3 },
+            { id: 14, sub: 'f.', text: 'Mengaitkan pembelajaran dengan pembentukan karakter murid', defaultScore: 3 },
             { 
                 type: 'subheader', 
                 title: 'Langkah pembelajaran dapat memfasilitasi murid untuk merasakan pengalaman belajar <strong class="text-blue-700">MENGAPLIKASI</strong> (mengaplikasi pemahaman secara kontekstual dalam kehidupan nyata sebagai bagian dari pendalaman pengetahuan)',
             },
-            { id: 15, sub: 'a.', text: 'Menghubungkan konsep baru dengan pengetahuan sebelumnya.' },
-            { id: 16, sub: 'b.', text: 'Menerapkan pengetahuan ke dalam situasi nyata atau bidang lain.' },
-            { id: 17, sub: 'c.', text: 'Memperkuatkan pemahaman dengan eksplorasi lebih lanjut.' },
-            { id: 18, sub: 'd.', text: 'Berpikir kritis dan mencari solusi inovatif berdasarkan pengetahuan yang ada.' },
+            { id: 15, sub: 'a.', text: 'Menghubungkan konsep baru dengan pengetahuan sebelumnya.', defaultScore: 3 },
+            { id: 16, sub: 'b.', text: 'Menerapkan pengetahuan ke dalam situasi nyata atau bidang lain.', defaultScore: 3 },
+            { id: 17, sub: 'c.', text: 'Memperkuatkan pemahaman dengan eksplorasi lebih lanjut.', defaultScore: 3 },
+            { id: 18, sub: 'd.', text: 'Berpikir kritis dan mencari solusi inovatif berdasarkan pengetahuan yang ada.', defaultScore: 3 },
             { 
                 type: 'subheader', 
                 title: 'Langkah pembelajaran dapat memfasilitasi murid untuk merasakan pengalaman belajar <strong class="text-blue-700">MEREFLEKSI</strong> (mengevaluasi dan memaknai proses serta hasil dari tindakan atau praktik nyata yang telah mereka lakukan dan menentukan tindak lanjut ke depan, serta mengelola proses belajarnya secara mandiri).',
                 pageBreak: true
             },
-            { id: 19, sub: 'a.', text: 'Memotivasi diri sendiri untuk tuntas belajar bagaimana cara belajar' },
-            { id: 20, sub: 'b.', text: 'Refleksi terhadap pencapaian tujuan pembelajaran (evaluasi diri)' },
-            { id: 21, sub: 'c.', text: 'Menerapkan strategi berpikir' },
-            { id: 22, sub: 'd.', text: 'Memiliki kemampuan metakognisi (meregulasi diri dalam pembelajaran)' },
-            { id: 23, sub: 'e.', text: 'Meregulasi emosi dalam pembelajaran' },
+            { id: 19, sub: 'a.', text: 'Memotivasi diri sendiri untuk tuntas belajar bagaimana cara belajar', defaultScore: 3 },
+            { id: 20, sub: 'b.', text: 'Refleksi terhadap pencapaian tujuan pembelajaran (evaluasi diri)', defaultScore: 3 },
+            { id: 21, sub: 'c.', text: 'Menerapkan strategi berpikir', defaultScore: 3 },
+            { id: 22, sub: 'd.', text: 'Memiliki kemampuan metakognisi (meregulasi diri dalam pembelajaran)', defaultScore: 3 },
+            { id: 23, sub: 'e.', text: 'Meregulasi emosi dalam pembelajaran', defaultScore: 3 },
             { id: 24, text: 'Mengaitkan materi pembelajaran dalam suatu mata pelajaran dengan mata pelajaran lainnya (lintas disiplin ilmu)', defaultScore: 3 },
             { id: 25, text: 'Merespons kebutuhan murid (menghargai proses, hasil, dan keunggulan setiap murid serta memotivasi setiap murid saat pembelajaran dengan tindakan atau kata-kata motivasi yang membangkitkan semangat belajar murid)', defaultScore: 3 },
             { id: 26, text: 'Melibatkan teknologi digital dalam proses pembelajaran (media dan sumber belajar)', defaultScore: 3 },
 
             // C. Penutup
-            { type: 'header', title: 'C. Penutup',},
+            { type: 'header', title: 'C. Penutup'},
             { id: 27, text: 'Memfasilitasi dan membimbing murid membuat kesimpulan untuk mendapatkan pemahaman bersama.', defaultScore: 3 },
             { id: 28, text: 'Memfasilitasi dan membimbing murid untuk merefleksi proses dan hasil pembelajaran (keberhasilan, kesulitan, apa yang telah dipelajari dan manfaatnya, apa yang telah dikuasai, serta apa yang ingin dipelajari berikutnya, dsb.)', defaultScore: 3, pageBreak: true },
             { id: 29, text: 'Memberikan umpan balik untuk semua murid berdasarkan temuan selama pembelajaran berlangsung terhadap proses dan hasil pembelajaran yang telah dilalui.', defaultScore: 3 },
@@ -325,18 +364,10 @@
                 const tr = document.createElement('tr');
                 
                 if (item.type === 'header') {
-                    if (item.pageBreak) {
-                        tr.className = 'bg-amber-100 font-bold text-slate-900 print-page-break';
-                    } else {
-                        tr.className = 'bg-amber-100 font-bold text-slate-900';
-                    }
+                    tr.className = item.pageBreak ? 'bg-amber-100 font-bold text-slate-900 print-page-break' : 'bg-amber-100 font-bold text-slate-900';
                     tr.innerHTML = `<td colspan="4" class="border border-slate-900 py-1.5 px-3">${item.title}</td>`;
                 } else if (item.type === 'subheader') {
-                    if (item.pageBreak) {
-                        tr.className = 'bg-slate-50 italic print-page-break';
-                    } else {
-                        tr.className = 'bg-slate-50 italic';
-                    }
+                    tr.className = item.pageBreak ? 'bg-slate-50 italic print-page-break' : 'bg-slate-50 italic';
                     tr.innerHTML = `<td colspan="4" class="border border-slate-900 py-1.5 px-3">${item.title}</td>`;
                 } else {
                     tr.className = 'hover:bg-slate-50/80 transition';
@@ -407,13 +438,170 @@
             qualDisplay.className = `text-sm font-extrabold px-2 py-0.5 rounded ${kualifikasiColor}`;
         }
 
+        /* GEMINI AI INTEGRATION FUNCTION */
+        async function generateWithAI() {
+            const namaGuru = document.getElementById('namaGuru').value.trim() || 'Guru';
+            const mapel = document.getElementById('mapel').value.trim() || 'Mata Pelajaran';
+            const kelas = document.getElementById('kelas').value.trim() || 'Kelas';
+            const materi = document.getElementById('materi').value.trim() || 'Materi Pelajaran';
+            const unitKerja = document.getElementById('unitKerja').value.trim() || 'Sekolah';
+
+            // Collect scores
+            const items = observationData.filter(i => i.id !== undefined);
+            const scoreDetails = items.map(item => {
+                const sEl = document.getElementById(`score_${item.id}`);
+                return {
+                    id: item.id,
+                    aspek: item.text,
+                    skor: sEl ? parseInt(sEl.value) : 3
+                };
+            });
+
+            // Show Loading UI
+            document.getElementById('aiLoadingModal').classList.remove('hidden');
+
+            const apiKey = "AQ.Ab8RN6J3YLZeFUWWLFy7ACFj_mLZz10VKPP2NhU_6oGQFmvqvA"; // Built-in environment auto-injection
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const systemPrompt = `Anda adalah seorang Supervisor Pendidikan Pakar dalam Pembelajaran Mendalam (Deep Learning). 
+Tugas Anda adalah memberikan evaluasi kritis, profesional, dan konstruktif untuk setiap 31 aspek observasi kelas, serta memberikan catatan dan rekomendasi umum.
+
+Pedoman Penilaian Komentar Berdasarkan Skor Aspek:
+- Skor 1 (Kurang): Komentar Kritis berisi aspek mendasar yang belum tampak, penyebabnya terkait materi ${materi}, serta instruksi perbaikan konkret.
+- Skor 2 (Cukup): Komentar Kritis mengapresiasi upaya awal guru namun menyebutkan kekurangan yang butuh penguatan pada materi ${materi}.
+- Skor 3 (Baik): Komentar Kritis mengapresiasi ketercapaian aspek yang sudah sesuai indikator Pembelajaran Mendalam pada materi ${materi}.
+- Skor 4 (Amat Baik): Komentar Kritis berisi pujian atas efektivitas, keunggulan inovatif, dan dampaknya bagi siswa kelas ${kelas}.
+
+Gunakan bahasa Indonesia baku, lugas, ramah, dan profesional pedagogis.
+Kembalikan data HANYA dalam bentuk JSON sesuai schema yang diberikan.`;
+
+            const userQuery = `Lakukan evaluasi observasi kelas untuk:
+- Nama Guru: ${namaGuru}
+- Mata Pelajaran: ${mapel}
+- Kelas: ${kelas}
+- Materi Pelajaran: ${materi}
+- Sekolah/Unit Kerja: ${unitKerja}
+
+Berikut data 31 skor aspek yang diamati:
+${JSON.stringify(scoreDetails, null, 2)}
+
+Mohon buatkan Komentar Kritis untuk Masing-Masing Aspek (1 hingga 31), lalu buatkan Catatan Rangkuman dan Rekomendasi Perbaikan.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            komentarKritis: {
+                                type: "ARRAY",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        id: { type: "INTEGER" },
+                                        komentar: { type: "STRING" }
+                                    },
+                                    required: ["id", "komentar"]
+                                }
+                            },
+                            catatan: { type: "STRING" },
+                            rekomendasi: { type: "STRING" }
+                        },
+                        required: ["komentarKritis", "catatan", "rekomendasi"]
+                    }
+                }
+            };
+
+            let attempts = 0;
+            const maxAttempts = 3;
+            let success = false;
+
+            while (attempts < maxAttempts && !success) {
+                try {
+                    attempts++;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (jsonText) {
+                        const parsed = JSON.parse(jsonText);
+
+                        // Fill in comments
+                        if (parsed.komentarKritis && Array.isArray(parsed.komentarKritis)) {
+                            parsed.komentarKritis.forEach(item => {
+                                const cEl = document.getElementById(`comment_${item.id}`);
+                                if (cEl) {
+                                    cEl.value = item.komentar;
+                                }
+                            });
+                        }
+
+                        // Fill in Catatan & Rekomendasi
+                        if (parsed.catatan) {
+                            document.getElementById('catatanInput').value = parsed.catatan;
+                        }
+                        if (parsed.rekomendasi) {
+                            document.getElementById('rekomendasiInput').value = parsed.rekomendasi;
+                        }
+
+                        success = true;
+                        document.getElementById('aiLoadingModal').classList.add('hidden');
+                        showModal("Generate AI Berhasil", "Komentar kritis, catatan, dan rekomendasi berhasil disusun oleh Gemini AI secara kontekstual.");
+                    } else {
+                        throw new Error("Respon AI tidak valid");
+                    }
+
+                } catch (error) {
+                    console.error(`Upaya AI Generate ke-${attempts} gagal:`, error);
+                    if (attempts < maxAttempts) {
+                        // Exponential backoff
+                        await new Promise(res => setTimeout(res, attempts * 1500));
+                    } else {
+                        document.getElementById('aiLoadingModal').classList.add('hidden');
+                        showModal("Gagal Menggenerasi", "Terjadi kesalahan saat menghubungkan ke AI. Silakan periksa koneksi internet Anda atau coba beberapa saat lagi.", true);
+                    }
+                }
+            }
+        }
+
+        function showModal(title, message, isError = false) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            const container = document.getElementById('modalIconContainer');
+            const icon = document.getElementById('modalIcon');
+
+            if (isError) {
+                container.className = "w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl";
+                icon.className = "fa-solid fa-triangle-exclamation";
+            } else {
+                container.className = "w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto text-xl";
+                icon.className = "fa-solid fa-circle-check";
+            }
+
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
         function resetForm() {
-            if (window.confirm && window.confirm("Apakah Anda yakin ingin mereset semua penilaian?")) {
+            if (window.confirm("Apakah Anda yakin ingin mereset semua penilaian, komentar, dan catatan?")) {
                 renderTable();
                 document.getElementById('catatanInput').value = '';
                 document.getElementById('rekomendasiInput').value = '';
                 document.getElementById('lokasiInput').value = 'Kota Depok, 5 Oktober 2026';
-                document.getElementById('tanggalInput').value = '5 Oktober 2026';
                 document.getElementById('namaObserverInput').value = 'Moch Ash Siddiq Sayyidul Tarmizi, S.T';
             }
         }
@@ -423,11 +611,11 @@
                 namaGuru: document.getElementById('namaGuru').value,
                 mapel: document.getElementById('mapel').value,
                 kelas: document.getElementById('kelas').value,
+                materi: document.getElementById('materi').value,
                 unitKerja: document.getElementById('unitKerja').value,
                 catatan: document.getElementById('catatanInput').value,
                 rekomendasi: document.getElementById('rekomendasiInput').value,
                 lokasi: document.getElementById('lokasiInput').value,
-                tanggal: document.getElementById('tanggalInput').value,
                 namaObserver: document.getElementById('namaObserverInput').value,
                 scores: {},
                 comments: {}
@@ -443,7 +631,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(formData, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `observasi_${formData.namaGuru.replace(/\s+/g, '_')}.json`);
+            downloadAnchor.setAttribute("download", `observasi_${formData.namaGuru.replace(/\s+/g, '_')}_${formData.mapel.replace(/\s+/g, '_')}.json`);
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
@@ -459,11 +647,11 @@
                         if (parsed.namaGuru !== undefined) document.getElementById('namaGuru').value = parsed.namaGuru;
                         if (parsed.mapel !== undefined) document.getElementById('mapel').value = parsed.mapel;
                         if (parsed.kelas !== undefined) document.getElementById('kelas').value = parsed.kelas;
+                        if (parsed.materi !== undefined) document.getElementById('materi').value = parsed.materi;
                         if (parsed.unitKerja !== undefined) document.getElementById('unitKerja').value = parsed.unitKerja;
                         if (parsed.catatan !== undefined) document.getElementById('catatanInput').value = parsed.catatan;
                         if (parsed.rekomendasi !== undefined) document.getElementById('rekomendasiInput').value = parsed.rekomendasi;
                         if (parsed.lokasi !== undefined) document.getElementById('lokasiInput').value = parsed.lokasi;
-                        if (parsed.tanggal !== undefined) document.getElementById('tanggalInput').value = parsed.tanggal;
                         if (parsed.namaObserver !== undefined) document.getElementById('namaObserverInput').value = parsed.namaObserver;
 
                         if (parsed.scores) {
@@ -481,9 +669,9 @@
                         }
 
                         calculateScores();
-                        alert("Data berhasil diimpor!");
+                        showModal("Import Berhasil", "Data observasi berhasil dimuat ke dalam form.");
                     } catch (err) {
-                        alert("Gagal membaca file JSON. Pastikan format file benar.");
+                        showModal("Gagal Import", "Format file JSON tidak valid.", true);
                     }
                 };
             }
